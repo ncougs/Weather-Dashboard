@@ -18,13 +18,19 @@
                     <form class="w-100 p-3">
                         <div class="mb-3">
                             <input type="city" class="form-control" id="city" placeholder="Melbourne">
-                            <button type="submit" class="btn btn-primary mt-2 w-100">Submit</button>
+                            <button type="submit" id="getWeather" class="btn btn-primary mt-2 w-100">Submit</button>
                         </div>
                     </form>
                 </div>
                 <div class="col flex-grow-1 bg-light d-flex flex-column">
-                    <div class="col border border-primary">
-                        CurrentDay
+                    <div id="currentWeather" class="col border border-primary">
+                        <h3 id="cityName">City Name</h3>
+                        <ul>
+                            <li>Temp: <span id="currentTemp"></span></li>
+                            <li>Wind: <span id="currentWind"></span></li>
+                            <li>Humidity: <span id="currentHumidity"></span></li>
+                            <li>UV Index: <span id="currentUV"></span></li>
+                        </ul>
                     </div>
                     <div class="col border border-primary">
                         Next 5 days
@@ -34,6 +40,8 @@
             </div>
         </main>
 
-
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+        <script src="Assets/JS/script.js"></script>
     </body>
 </html>
