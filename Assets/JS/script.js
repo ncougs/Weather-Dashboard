@@ -6,8 +6,8 @@ var currentWindEL = $("#currentWind");
 var currentHumidityEL = $("#currentHumidity");
 var currentUVEL = $("#currentUV");
 
-var currentWeatherURL = "https:\\api.openweathermap.org/data/2.5/weather?q=";
-var forecastURL = "https:\\api.openweathermap.org/data/2.5/forecast?q="
+var currentWeatherURL = "https://api.openweathermap.org/data/2.5/weather?q=";
+var forecastURL = "https://api.openweathermap.org/data/2.5/forecast?q="
 
 var apiKey = "b0bf97a062cca5b9556fa45886894621";
 var urlParameters;
