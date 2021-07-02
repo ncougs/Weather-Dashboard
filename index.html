@@ -7,37 +7,32 @@
         <link href="Assets/CSS/style.css" rel="stylesheet"/>
         <title>Weather Dashboard</title>
     </head>
-    <body>
+    <body class="d-flex flex-column h-100">
         <header>
             <h1 class="text-center">Weather Dasbhoard</h1>
         </header>
-        <main">
-            <div class="container-fluid d-flex flex-row vh-100 m-0 px-3">
-                <div class="col-3 bg-light">
+        <main class="d-flex flex-column h-100">
+            <div class="container-fluid flex-grow-1 row m-0 px-5">
+                <div class="col bg-light d-flex flex-column justify-content-center">
                     <h2 class="m-1 text-center">Search for a City:</h2>
-                    <form class="w-100 p-3">
-                        <div class="mb-3">
+                    <form class="p-3">
+                        <div class="mb-3 d-flex flex-column align-items-center">
                             <input type="city" class="form-control" id="city" placeholder="Melbourne">
-                            <button type="submit" id="getWeather" class="btn btn-primary mt-2 w-100">Submit</button>
+                            <button type="submit" id="getWeather" class="btn btn-primary mt-2">Submit</button>
                         </div>
                     </form>
                 </div>
-                <div class="col flex-grow-1 bg-light d-flex flex-column">
-                    <div id="currentWeather" class="col border border-primary">
-                        <h3 id="cityName">City Name</h3>
-                        <ul>
-                            <li>Temp: <span id="currentTemp"></span></li>
-                            <li>Wind: <span id="currentWind"></span></li>
-                            <li>Humidity: <span id="currentHumidity"></span></li>
-                            <li>UV Index: <span id="currentUV"></span></li>
-                        </ul>
-                    </div>
-                    <div id="forecastWeather" class="col border border-primary">
-                    </div>
-                    
+                <div id="displayWeather" class="col flex-grow-1 bg-light d-flex flex-column removeBlock">
+                    <div id="currentWeather" class="col"></div>
+                    <div id="forecastWeather" class="col"> </div>                
                 </div>
             </div>
         </main>
+        <footer class="footer mt-auto py-3">
+            <div class="container">
+              <span class="text-muted">Place sticky footer content here.</span>
+            </div>
+          </footer>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>

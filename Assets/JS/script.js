@@ -1,11 +1,7 @@
 var formEL = $("form");
+var displayWeather = $('#displayWeather')
 var currentWeatherEL = $("#currentWeather");
 var forecastWeatherEL = $("#forecastWeather")
-var cityNameEL = $("#cityName");
-var currentTempEL = $("#currentTemp");
-var currentWindEL = $("#currentWind");
-var currentHumidityEL = $("#currentHumidity");
-var currentUVEL = $("#currentUV");
 
 var currentWeatherURL = "https://api.openweathermap.org/data/2.5/weather?q=";
 var forecastURL = "https://api.openweathermap.org/data/2.5/onecall?";
@@ -17,14 +13,19 @@ function handleSumit (event) {
 
     event.preventDefault();
 
+    displayWeather.removeClass("removeBlock");
+    displayWeather.addClass("displayBlock");
+    displayWeather.addClass("col-3");
+
     var cityName = $(event.target).find('input[id="city"]').val();
 
     urlParameters = cityName + "&appid=" + apiKey + "&units=metric";
 
+    removeContents();
+
     getCurrentWeather(urlParameters);
 
 };
-
 
 function getCurrentWeather(urlParameters) {
     fetch(currentWeatherURL + urlParameters).then(function (response) {
@@ -32,9 +33,7 @@ function getCurrentWeather(urlParameters) {
             return response.json();
         }
         else {
-            currentWeatherEL.css("display", "block");
-            currentWeatherEL.text("Wooahhh settle down, that city is no good");
-            console.log("no good");
+            //add error handling
         }
     }).then(function (data) {
         addCurrentWeather(data);
@@ -47,12 +46,15 @@ function addCurrentWeather(data) {
 
     var currentDate = moment();
 
-    currentWeatherEL.css("display", "block");
+    var heading = '<h5>' + data.name + " - " + currentDate.format("DD/MM/YYYY") + '</h5>'
+    var temp = '<p>Temp: '+ data.main.temp + '\u2103</p>'
+    var wind = '<p>Wind: '+ data.wind.speed +' km/h</p>'
+    var humidity = '<p>Humidity: '+ data.main.humidity +'%</p>'
 
-    cityNameEL.text(data.name + " - " + currentDate.format("DD/MM/YYYY"));
-    currentTempEL.text(data.main.temp + '\u2103');
-    currentWindEL.text(data.wind.speed + " km/h");
-    currentHumidityEL.text(data.main.humidity);
+    currentWeatherEL.append(heading);
+    currentWeatherEL.append(temp);
+    currentWeatherEL.append(wind);
+    currentWeatherEL.append(humidity);
 
     var lat = data.coord.lat;
     var lon = data.coord.lon;
@@ -80,6 +82,8 @@ function getForeCast(urlParameters) {
 function addForeCast(data) {
 
     var dailyData = data.daily;
+
+    forecastWeatherEL.append('<h3>5 Day Forecast:</h3>');
      
     forecastWeatherEL.append('<div class="row outerCardRow">');
 
@@ -103,11 +107,21 @@ function addForeCast(data) {
         currentCardEL.append(wind);
         currentCardEL.append(humidity);
 
-        dayCount = 0
-
     };
 
 
+
+};
+
+function removeContents() {
+
+    if (currentWeatherEL.children().length > 0) {
+        currentWeatherEL.children().remove();
+    };
+
+    if (forecastWeatherEL.children().length > 0) {
+        forecastWeatherEL.children().remove();
+    };
 
 };
 
