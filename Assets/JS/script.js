@@ -124,6 +124,12 @@ function addForeCast(data) {
         currentCardEL.append(wind);
         currentCardEL.append(humidity);
 
+        if (i==0) {
+            var uv = '<p>UV Index: '+ dailyData[i].uvi +'</p>';
+
+            currentWeatherEL.append(uv);
+        };
+ 
     };
 
 
@@ -171,6 +177,9 @@ function addPreviousSearchButton(searchName) {
         newButtonEL.text(searchName);
 
         previousSearchesEl.append(newButtonEL);
+
+
+
 
         urlParameters = searchName + "&appid=" + apiKey + "&units=metric";
 
