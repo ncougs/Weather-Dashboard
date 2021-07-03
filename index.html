@@ -11,18 +11,20 @@
         <header>
             <h1 class="text-center">Weather Dasbhoard</h1>
         </header>
-        <main class="d-flex flex-column h-100">
-            <div class="container-fluid flex-grow-1 row m-0 px-5">
-                <div class="col bg-light d-flex flex-column justify-content-center">
-                    <h2 class="m-1 text-center">Search for a City:</h2>
-                    <form class="p-3">
-                        <div class="mb-3 d-flex flex-column align-items-center">
-                            <input type="city" class="form-control" id="city" placeholder="Melbourne">
-                            <button type="submit" id="getWeather" class="btn btn-primary mt-2">Submit</button>
-                        </div>
-                    </form>
-                </div>
-                <div id="displayWeather" class="col flex-grow-1 bg-light d-flex flex-column removeBlock">
+        <main class="container-fluid d-flex flex-column h-100 m-0 px-5">
+            <div class="row flex-grow-1">
+                <div id="searchBlock" class="col-md-12 bg-light d-flex flex-column justify-content-center">
+                    <div class="col">
+                        <h2 class="m-1 text-center">Search for a City:</h2>
+                        <form class="p-3">
+                            <div class="mb-3 d-flex flex-column align-items-center">
+                                <input type="city" class="form-control" id="city" placeholder="Melbourne">
+                                <button type="submit" id="getWeather" class="btn btn-primary mt-2">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div id="previousSearches" class="col-8 removeBlock w-100 p-3"></div>                 </div>
+                <div id="displayWeather" class="col-md-12 col-lg-9 flex-grow-1 bg-light d-flex flex-column removeBlock">
                     <div id="currentWeather" class="col"></div>
                     <div id="forecastWeather" class="col"> </div>                
                 </div>

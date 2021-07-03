@@ -1,4 +1,6 @@
 var formEL = $("form");
+var searchBlockEL = $("#searchBlock")
+var previousSearchesEl = $("#previousSearches")
 var displayWeather = $('#displayWeather')
 var currentWeatherEL = $("#currentWeather");
 var forecastWeatherEL = $("#forecastWeather")
@@ -15,9 +17,19 @@ function handleSumit (event) {
 
     displayWeather.removeClass("removeBlock");
     displayWeather.addClass("displayBlock");
-    displayWeather.addClass("col-3");
+    previousSearchesEl.removeClass("removeBlock");
+    previousSearchesEl.addClass("displayBlock");
+    searchBlockEL.addClass("col-lg-3");
+    searchBlockEL.removeClass("d-flex flex-column justify-content-center");
 
-    var cityName = $(event.target).find('input[id="city"]').val();
+    var cityName;
+
+    if (String(event.target).includes('Form')) {
+        cityName = $(event.target).find('input[id="city"]').val();
+    }
+    else if (String(event.target).includes('Button')) {
+        cityName = $(event.target).html();
+    };
 
     urlParameters = cityName + "&appid=" + apiKey + "&units=metric";
 
@@ -38,6 +50,7 @@ function getCurrentWeather(urlParameters) {
     }).then(function (data) {
         addCurrentWeather(data);
     });
+
 };
 
 function addCurrentWeather(data) {
@@ -62,6 +75,8 @@ function addCurrentWeather(data) {
     urlParameters = "lat="+ lat +"&lon="+ lon +"&appid=" + apiKey + "&units=metric"; 
 
     getForeCast(urlParameters);
+
+    addPreviousSearchButton(data.name);
 
 }
 
@@ -126,5 +141,43 @@ function removeContents() {
     };
 
 };
+
+function addPreviousSearchButton(searchName) {
+
+    var previousMatch = false
+
+    var previousResults = previousSearchesEl.children();
+
+     for (i=0; i < previousResults.length; i++ ) {
+
+        if(searchName == $(previousResults[i]).html()){
+
+            previousMatch = true;
+
+            break;
+
+        };
+    }; 
+
+    if (previousMatch) {
+        return;
+    }
+    else {
+        var newButtonEL = document.createElement("button");
+
+        newButtonEL = $(newButtonEL);
+        newButtonEL.attr("type", "button");
+        newButtonEL.addClass("btn btn-secondary w-100 my-1");
+        newButtonEL.text(searchName);
+
+        previousSearchesEl.append(newButtonEL);
+
+        urlParameters = searchName + "&appid=" + apiKey + "&units=metric";
+
+        newButtonEL.on("click", handleSumit);
+    };
+
+};
+
 
 formEL.on("submit", handleSumit);
