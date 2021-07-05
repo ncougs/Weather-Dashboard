@@ -20,12 +20,15 @@ function handleSumit (event) {
     previousSearchesEl.removeClass("removeBlock");
     previousSearchesEl.addClass("displayBlock");
     searchBlockEL.addClass("col-lg-3");
-    searchBlockEL.removeClass("d-flex flex-column justify-content-center");
+    searchBlockEL.removeClass("d-flex flex-column");
+    $('#city').css("width", "100%");
 
     var cityName;
 
     if (String(event.target).includes('Form')) {
         cityName = $(event.target).find('input[id="city"]').val();
+
+        $('#city').val("");
     }
     else if (String(event.target).includes('Button')) {
         cityName = $(event.target).html();
@@ -45,7 +48,7 @@ function getCurrentWeather(urlParameters) {
             return response.json();
         }
         else {
-            //add error handling
+            handleError();
         }
     }).then(function (data) {
         addCurrentWeather(data);
@@ -55,16 +58,18 @@ function getCurrentWeather(urlParameters) {
 
 function addCurrentWeather(data) {
 
-    console.log(data);
-
     var currentDate = moment();
 
     var heading = '<h5>' + data.name + " - " + currentDate.format("DD/MM/YYYY") + '</h5>'
     var temp = '<p>Temp: '+ data.main.temp + '\u2103</p>'
     var wind = '<p>Wind: '+ data.wind.speed +' km/h</p>'
     var humidity = '<p>Humidity: '+ data.main.humidity +'%</p>'
+    var image = '<img alt="Weather icon" class="img-fluid" src="http://openweathermap.org/img/wn/'+ data.weather[0].icon +'.png"></img>'
 
+
+    currentWeatherEL.append('<h3 class="fw-bold">Current Weather:</h3>');
     currentWeatherEL.append(heading);
+    currentWeatherEL.append(image);
     currentWeatherEL.append(temp);
     currentWeatherEL.append(wind);
     currentWeatherEL.append(humidity);
@@ -86,10 +91,9 @@ function getForeCast(urlParameters) {
             return response.json();
         }
         else {
-            //error handling here
+            handleError();
         }
     }).then(function (data) {
-        console.log(data);
         addForeCast(data);
     });
 };
@@ -98,36 +102,64 @@ function addForeCast(data) {
 
     var dailyData = data.daily;
 
-    forecastWeatherEL.append('<h3>5 Day Forecast:</h3>');
+    forecastWeatherEL.append('<h3 class="fw-bold">5 Day Forecast:</h3>');
      
     forecastWeatherEL.append('<div class="row outerCardRow">');
 
     var outerCardRow = $('.outerCardRow');
 
-    for(i=0; i < 5; i++) {
+    for(i=0; i < 6; i++) {
 
-        outerCardRow.append('<div class="col"><div class="card"><div id='+ i +' class="card-body">');
+        if(i != 0) {
+            outerCardRow.append('<div class="col"><div class="card"><div id='+ i +' class="card-body">');
 
-        var currentCardEL = $('#' + i);
+            var currentCardEL = $('#' + i);
+    
+            var currentDate = moment(dailyData[i].dt, 'X');
+    
+            var heading = '<h5>' + currentDate.format("DD/MM/YYYY") + '</h5>'
+            var image = '<img alt="Weather icon" class="img-fluid" src="http://openweathermap.org/img/wn/'+ dailyData[i].weather[0].icon +'.png"></img>'
+            var temp = '<p>Temp: '+ dailyData[i].temp.day + '\u2103</p>'
+            var wind = '<p>Wind: '+ dailyData[i].wind_speed +' km/h</p>'
+            var humidity = '<p>Humidity: '+ dailyData[i].humidity +'%</p>'
+    
+            currentCardEL.append(heading);
+            currentCardEL.append(image);
+            currentCardEL.append(temp);
+            currentCardEL.append(wind);
+            currentCardEL.append(humidity);   
+        }
 
-        var currentDate = moment(dailyData[i].dt, 'X');
-
-        var heading = '<h5>' + currentDate.format("DD/MM/YYYY") + '</h5>'
-        var image = '<img alt="Weather icon" class="img-fluid" src="http://openweathermap.org/img/wn/'+ dailyData[i].weather[0].icon +'.png"></img>'
-        var temp = '<p>Temp: '+ dailyData[i].temp.day + '\u2103</p>'
-        var wind = '<p>Wind: '+ dailyData[i].wind_speed +' km/h</p>'
-        var humidity = '<p>Humidity: '+ dailyData[i].humidity +'%</p>'
-
-        currentCardEL.append(heading);
-        currentCardEL.append(image);
-        currentCardEL.append(temp);
-        currentCardEL.append(wind);
-        currentCardEL.append(humidity);
-
+       
         if (i==0) {
-            var uv = '<p>UV Index: '+ dailyData[i].uvi +'</p>';
 
-            currentWeatherEL.append(uv);
+            var uvi = dailyData[i].uvi
+
+            var uvEL = document.createElement("p");
+            uvEL = $(uvEL);
+
+            if (Number(uvi) <= 2) {
+                uvEL.css("background", "green");
+            }
+            else if (Number(uvi) > 2 && Number(uvi) <= 5) {
+                uvEL.css("background", "yellow");
+            }
+            else if (Number(uvi) > 5 && Number(uvi) <= 7) {
+                uvEL.css("background", "orange");
+            }
+            else if (Number(uvi) > 7 && Number(uvi) <= 10) {
+                uvEL.css("background", "red");
+            }
+            else if (Number(uvi) > 10) {
+                uvEL.css("background", "purple");
+            }; 
+
+            uvEL.text("UV Index: "+ uvi);
+            uvEL.addClass("uvi");
+            
+            currentWeatherEL.append(uvEL);
+
+            
         };
  
     };
@@ -187,6 +219,11 @@ function addPreviousSearchButton(searchName) {
     };
 
 };
+
+function handleError () {
+    alert("Woops, Something went wrong with the search! Try again.. (check city name)")
+};
+
 
 
 formEL.on("submit", handleSumit);

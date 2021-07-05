@@ -1,7 +1,17 @@
+* {
+    font-family: 'Varela', sans-serif;
+};
+
 body,html {
     margin: 0;
     padding: 0;
     height: 100vh;
+}
+
+header {
+    background: #438496;
+    color: white;
+    font-weight: bold;
 }
 
 .removeBlock {
@@ -10,4 +20,28 @@ body,html {
 
 .displayBlock {
     display: block;
-};
+}
+
+.customFooter {
+    position: sticky;
+    bottom: 0;
+    width: 100%;
+}
+
+.uvi {
+    width: max-content;
+    font-weight: bold;
+}
+
+
+@media screen and (min-width: 480px) {
+    #city {
+        width: 50%;
+    }
+}
+
+@media screen and (min-width: 992px) {
+    #city {
+        width: 25%;
+    }
+}

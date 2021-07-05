@@ -4,18 +4,19 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+        <link href="https://fonts.googleapis.com/css2?family=Varela&display=swap" rel="stylesheet">
         <link href="Assets/CSS/style.css" rel="stylesheet"/>
         <title>Weather Dashboard</title>
     </head>
-    <body class="d-flex flex-column h-100">
+    <body class="d-flex flex-column vh-100">
         <header>
             <h1 class="text-center">Weather Dasbhoard</h1>
         </header>
-        <main class="container-fluid d-flex flex-column h-100 m-0 px-5">
+        <main class="container-fluid flex-grow-1 d-flex flex-column vh-100 m-0 p-5">
             <div class="row flex-grow-1">
-                <div id="searchBlock" class="col-md-12 bg-light d-flex flex-column justify-content-center">
-                    <div class="col">
-                        <h2 class="m-1 text-center">Search for a City:</h2>
+                <div id="searchBlock" class="col-md-12 bg-light d-flex flex-column">
+                    <div class="col d-flex flex-column justify-content-center">
+                        <h2 class="m-1 text-center fw-bold">Search for a City:</h2>
                         <form class="p-3">
                             <div class="mb-3 d-flex flex-column align-items-center">
                                 <input type="city" class="form-control" id="city" placeholder="Melbourne">
@@ -23,18 +24,18 @@
                             </div>
                         </form>
                     </div>
-                    <div id="previousSearches" class="col-8 removeBlock w-100 p-3"></div>                 </div>
+                    <div id="previousSearches" class="col-8 removeBlock w-100 p-3">
+                        <h2 class="fw-bold">Previous Results: </h2>
+                    </div>                 
+                </div>
                 <div id="displayWeather" class="col-md-12 col-lg-9 flex-grow-1 bg-light d-flex flex-column removeBlock">
                     <div id="currentWeather" class="col"></div>
                     <div id="forecastWeather" class="col"> </div>                
                 </div>
             </div>
+
         </main>
-        <footer class="footer mt-auto py-3">
-            <div class="container">
-              <span class="text-muted">Place sticky footer content here.</span>
-            </div>
-          </footer>
+
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
