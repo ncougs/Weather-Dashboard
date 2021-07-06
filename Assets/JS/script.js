@@ -64,7 +64,7 @@ function addCurrentWeather(data) {
     var temp = '<p>Temp: '+ data.main.temp + '\u2103</p>'
     var wind = '<p>Wind: '+ data.wind.speed +' km/h</p>'
     var humidity = '<p>Humidity: '+ data.main.humidity +'%</p>'
-    var image = '<img alt="Weather icon" class="img-fluid" src="http://openweathermap.org/img/wn/'+ data.weather[0].icon +'.png"></img>'
+    var image = '<img alt="Weather icon" class="img-fluid" src="https://openweathermap.org/img/wn/'+ data.weather[0].icon +'.png"></img>'
 
 
     currentWeatherEL.append('<h3 class="fw-bold">Current Weather:</h3>');
@@ -118,7 +118,7 @@ function addForeCast(data) {
             var currentDate = moment(dailyData[i].dt, 'X');
     
             var heading = '<h5>' + currentDate.format("DD/MM/YYYY") + '</h5>'
-            var image = '<img alt="Weather icon" class="img-fluid" src="http://openweathermap.org/img/wn/'+ dailyData[i].weather[0].icon +'.png"></img>'
+            var image = '<img alt="Weather icon" class="img-fluid" src="https://openweathermap.org/img/wn/'+ dailyData[i].weather[0].icon +'.png"></img>'
             var temp = '<p>Temp: '+ dailyData[i].temp.day + '\u2103</p>'
             var wind = '<p>Wind: '+ dailyData[i].wind_speed +' km/h</p>'
             var humidity = '<p>Humidity: '+ dailyData[i].humidity +'%</p>'
