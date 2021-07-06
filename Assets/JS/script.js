@@ -182,6 +182,20 @@ function removeContents() {
 
 function addPreviousSearchButton(searchName) {
 
+    var resultsArray = [];
+
+    prevousResultsOut = localStorage.getItem("previousResults");
+
+    if (prevousResultsOut == null) {
+        resultsArray.push(searchName);
+        localStorage.setItem("previousResults", JSON.stringify(resultsArray));
+    }
+    else {
+        resultsArray = JSON.parse(prevousResultsOut);
+        resultsArray.push(searchName);
+        localStorage.setItem("previousResults", JSON.stringify(resultsArray));
+    };
+
     var previousMatch = false
 
     var previousResults = previousSearchesEl.children();
@@ -224,6 +238,44 @@ function handleError () {
     alert("Woops, Something went wrong with the search! Try again.. (check city name)")
 };
 
+function loadPreviousSearches () {
+
+    var resultsArray = [];
+
+    var prevousResultsOut = localStorage.getItem("previousResults");
+
+    if (prevousResultsOut == null) {
+        return;
+    }
+    else {
+        resultsArray = JSON.parse(prevousResultsOut);
+    };
+
+    if (resultsArray.length > 0) {
+
+        var uniqueResults = [];
+        $.each(resultsArray, function(i, el){
+            if($.inArray(el, uniqueResults) === -1) uniqueResults.push(el);
+        });
+
+        uniqueResults.forEach(result => {
+
+            var newButtonEL = document.createElement("button");
+
+            newButtonEL = $(newButtonEL);
+            newButtonEL.attr("type", "button");
+            newButtonEL.addClass("btn btn-secondary w-100 my-1");
+            newButtonEL.text(result);
+    
+            previousSearchesEl.append(newButtonEL);
+              
+            newButtonEL.on("click", handleSumit);
+            
+        });
+    };
+
+}
 
 
 formEL.on("submit", handleSumit);
+loadPreviousSearches();
